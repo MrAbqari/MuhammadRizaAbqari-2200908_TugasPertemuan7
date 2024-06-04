@@ -1,28 +1,45 @@
 package tugas.pkg7.pbo;
 
-import java.util.Scanner;
-
 public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+	public static void main(String[] args) {
 
-        System.out.println("Enter a, b, c, d, e, and f: ");
-        double a = scanner.nextDouble();
-        double b = scanner.nextDouble();
-        double c = scanner.nextDouble();
-        double d = scanner.nextDouble();
-        double e = scanner.nextDouble();
-        double f = scanner.nextDouble();
+		StopWatch stopWatch = new StopWatch();
+                
+		int[] randomArray = getArray();
+                
+		stopWatch.start();
 
-        LinearEquation linearequation = new LinearEquation(a, b, c, d, e, f);
+		selectionSort(randomArray);
 
-        if (linearequation.isSolvable()) {
-            System.out.println("x = " + linearequation.getX());
-            System.out.println("y = " + linearequation.getY());
-        } else {
-            System.out.println("The system does not have a solution.");
-        }
+		stopWatch.stop();
 
-        scanner.close();
-    }
+		System.out.println("Waktu eksekusi pengurutan array 100.000: " + stopWatch.getElapsedTime() +  " milidetik");
+	}
+
+	public static int[] getArray() {
+		int[] array = new int[100000];
+		for (int i = 0; i < array.length; i++) {
+			array[i] = (int)(Math.random() * 100000);
+		}
+		return array;
+	}
+
+	public static void selectionSort(int[] array) {
+		for (int i = 0; i < array.length - 1; i++) {
+			int min = array[i];
+			int minIndex = i;
+
+			for (int j = i + 1; j < array.length; j++) {
+				if (array[j] < min) {
+					min = array[j];
+					minIndex = j;
+				}
+			}
+
+			if (i != minIndex) {
+				array[minIndex] = array[i];
+				array[i] = min;
+			}
+		}
+	} 
 }
